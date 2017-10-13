@@ -1,0 +1,23 @@
+# Create a new figure
+@figure = Figure.create(name: params[:figure][:name])
+
+# Check if there is a new landmark
+if params[:landmark][:name] != ""
+  # Create a new landmark
+  landmark = Landmark.find_or_create_by(name: params[:landmark][:name])
+else
+  landmark = Landmark.find(params[:figure][:landmark_ids])
+end
+# Connect the figure to the landmark
+@figure.landmarks << landmark
+# Check if there is a new landmark
+if params[:title][:name] != ""
+  # Create a new title
+  title = Title.find_or_create_by(name: params[:title][:name])
+else
+  title = Title.find(params[:figure][:title_ids])
+end
+# Connect the figure to the title
+@figure.titles << title
+@figure.save
+# binding.pry
